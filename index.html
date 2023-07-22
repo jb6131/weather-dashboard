@@ -4,8 +4,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/style.css">
 </head>
+
 <body>
-  
+  <section class="hero is-small is-primary has-background-link">
+    <div class="hero-body">
+      <p class="title has-text-centered">
+        Weather Dashboard
+      </p>
+    </div>
+  </section>
+
+  <div class="columns">
+    <div class="column is-one-quarter m-2">
+      <div class="field">
+        <label class="label is-size-3 has-text-weight-medium">Search for a City:</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="San Diego">
+        </div>
+      </div>
+      <div class="control">
+        <button class="button is-link is-fullwidth">Search</button>
+      </div>
+    </div>
+
+    <div class="column m-2">
+      <div class="box">
+        <div class="content">
+          <h2>City Name (Date) Icon</h2>
+          <p>Temp: </p>
+          <p>Wind: </p>
+          <p>Humidity: </p>
+        </div>
+      </div>
+      <div class="block">
+        <label class="label is-size-4">5-Day Forecast</label>
+        <div class="columns">
+          <div class="column">
+            <div class="box has-text-white has-background-link">
+              <p>Date</p>
+              <i>Icon</i>
+              <p>Temp: </p>
+              <p>Wind: </p>
+              <p>Humidity: </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="box has-text-white has-background-link">
+              <p>Date</p>
+              <i>Icon</i>
+              <p>Temp: </p>
+              <p>Wind: </p>
+              <p>Humidity: </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="box has-text-white has-background-link">
+              <p>Date</p>
+              <i>Icon</i>
+              <p>Temp: </p>
+              <p>Wind: </p>
+              <p>Humidity: </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="box has-text-white has-background-link">
+              <p>Date</p>
+              <i>Icon</i>
+              <p>Temp: </p>
+              <p>Wind: </p>
+              <p>Humidity: </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="box has-text-white has-background-link">
+              <p>Date</p>
+              <i>Icon</i>
+              <p>Temp: </p>
+              <p>Wind: </p>
+              <p>Humidity: </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="./assets/script.js"></script>
 </body>
 </html>
