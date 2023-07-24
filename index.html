@@ -22,22 +22,19 @@
       <div class="field">
         <label class="label is-size-3 has-text-weight-medium">Search for a City:</label>
         <div class="control">
-          <input class="input" type="text" placeholder="San Diego">
+          <input id="city-search" class="input" type="text" placeholder="San Diego">
+          <div id="error-message" class="has-text-danger"></div>
         </div>
       </div>
       <div class="control">
-        <button class="button is-link is-fullwidth">Search</button>
+        <button id="search-button" class="button is-link is-fullwidth">Search</button>
       </div>
+      <div id="search-history"></div>
     </div>
 
     <div class="column m-2">
       <div class="box">
-        <div class="content">
-          <h2>City Name (Date) Icon</h2>
-          <p>Temp: </p>
-          <p>Wind: </p>
-          <p>Humidity: </p>
-        </div>
+        <div id="current-weather" class="content"></div>
       </div>
       <div class="block">
         <label class="label is-size-4">5-Day Forecast</label>
