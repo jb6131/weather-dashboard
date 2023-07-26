@@ -1,6 +1,6 @@
 function getCoordinates(city, weatherDataCallback) {
   var apiKey = '761c649664695b812876f6334b403542';
-  var geocodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`;
+  var geocodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`;
 
   fetch(geocodingApiUrl)
     .then(function (response) {
@@ -46,7 +46,7 @@ function updateCurrentWeather(weatherData) {
   var currentWeatherDiv = document.getElementById('current-weather');
 
   currentWeatherDiv.innerHTML = `
-  <p class="is-size-3">${city} (${date}) <img src="http://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon"></p>
+  <p class="is-size-3">${city} (${date}) <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon"></p>
   <p>Temp: ${temperatureShown}&deg;F</p>
   <p>Wind: ${windSpeed} m/s</p>
   <p>Humidity: ${humidity}%</p>
@@ -71,7 +71,7 @@ function updateFiveDayForecast(weatherData) {
 
     forecastDivs[index].innerHTML = `
       <p>${date}</p>
-      <p><img src="http://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon"></p>
+      <p><img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon"></p>
       <p>Temp: ${temperatureShown}&deg;F</p>
       <p>Wind: ${windSpeed} m/s</p>
       <p>Humidity: ${humidity}%</p>
