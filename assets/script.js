@@ -26,23 +26,28 @@ function getWeatherByCoordinates(lat, lon, weatherDataCallback) {
       return response.json();
     })
     .then(function (weatherData) {
+      console.log(weatherData);
       weatherDataCallback(weatherData);
     });
 }
 
 function updateCurrentWeather(weatherData) {
   var city = weatherData.city.name;
-  var date = '7/23/2023'; // Placeholder
+  var date = new Date(weatherData.list[0].dt * 1000).toLocaleDateString();
   var icon = weatherData.list[0].weather[0].icon;
-  var temperature = weatherData.list[0].main.temp;
+
+  var temperatureKelvin = weatherData.list[0].main.temp;
+  var temperatureFahrenheit = (temperatureKelvin - 273.15) * 9/5 + 32;
+
+  var temperatureShown = temperatureFahrenheit.toFixed(2);
   var windSpeed = weatherData.list[0].wind.speed;
   var humidity = weatherData.list[0].main.humidity;
 
   var currentWeatherDiv = document.getElementById('current-weather');
 
   currentWeatherDiv.innerHTML = `
-  <h2>${city} (${date}) <img src="http://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon"></h2>
-  <p>Temp: ${temperature} K</p>
+  <p class="is-size-3">${city} (${date}) <img src="http://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon"></p>
+  <p>Temp: ${temperatureShown}&deg;F</p>
   <p>Wind: ${windSpeed} m/s</p>
   <p>Humidity: ${humidity}%</p>
   `;
@@ -51,17 +56,23 @@ function updateCurrentWeather(weatherData) {
 function updateFiveDayForecast(weatherData) {
   var forecastDivs = document.querySelectorAll('.forecast-box');
 
-  for (var i = 0; i < 5; i++) {
-    var date = '7/23/2023';
+  for (var i = 7; i < 40; i += 8) {
+    var date = new Date(weatherData.list[i].dt * 1000).toLocaleDateString();
     var icon = weatherData.list[i].weather[0].icon;
-    var temperature = weatherData.list[i].main.temp;
+
+    var temperatureKelvin = weatherData.list[i].main.temp;
+    var temperatureFahrenheit = (temperatureKelvin - 273.15) * 9/5 + 32;
+
+    var temperatureShown = temperatureFahrenheit.toFixed(2);
     var windSpeed = weatherData.list[i].wind.speed;
     var humidity = weatherData.list[i].main.humidity;
 
-    forecastDivs[i].innerHTML = `
-      <p>Date: ${date}</p>
+    var index = Math.floor((i - 7) / 8);
+
+    forecastDivs[index].innerHTML = `
+      <p>${date}</p>
       <p><img src="http://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon"></p>
-      <p>Temp: ${temperature} K</p>
+      <p>Temp: ${temperatureShown}&deg;F</p>
       <p>Wind: ${windSpeed} m/s</p>
       <p>Humidity: ${humidity}%</p>
     `;
@@ -74,7 +85,22 @@ function displaySearchHistory(searchHistory) {
 
   for (var i = 0; i < searchHistory.length; i++) {
     var city = searchHistory[i];
-    historyButton += `<button class="button is-small">${city}</button>`;
+    historyButton += `<button id="search-history" class="button is-small is-fullwidth my-2" data-city="${city}">${city}</button>`;
+  }
+
+  searchHistoryDiv.innerHTML = historyButton;
+}
+
+function displaySearchHistoryOnLoad() {
+  var searchHistory = localStorage.getItem('searchHistory');
+  searchHistory = JSON.parse(searchHistory);
+
+  var searchHistoryDiv = document.getElementById('search-history');
+  var historyButton = '';
+
+  for (var i = 0; i < searchHistory.length; i++) {
+    var city = searchHistory[i];
+    historyButton += `<button id="search-history" class="button is-small is-fullwidth my-2" data-city="${city}">${city}</button>`;
   }
 
   searchHistoryDiv.innerHTML = historyButton;
@@ -122,6 +148,21 @@ function handleSearch() {
   })
 }
 
+function handleHistoryButtons(event) {
+  if (event.target.id === 'search-history') {
+    var city = event.target.dataset.city;
+
+    getCoordinates(city, function (coordinates) {
+      var data = {
+        lat: coordinates.lat,
+        lon: coordinates.lon,
+        city: city
+      };
+      handleCoordinates(data);
+    });
+  }
+}
+
 function showError(message) {
   var errorDiv = document.getElementById('error-message');
   errorDiv.textContent = message;
@@ -129,3 +170,8 @@ function showError(message) {
 
 var searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', handleSearch);
+
+var searchHistoryDiv = document.getElementById('search-history');
+searchHistoryDiv.addEventListener('click', handleHistoryButtons);
+
+displaySearchHistoryOnLoad();
